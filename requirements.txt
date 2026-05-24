@@ -1,0 +1,12 @@
+openai-whisper
+torch
+torchaudio
+silero-vad
+sounddevice
+soundfile
+numpy
+pandas
+jiwer
+coqui-tts
+faster-whisper
+pyaudio
