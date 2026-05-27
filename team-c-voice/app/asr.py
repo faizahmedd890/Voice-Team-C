@@ -1,3 +1,4 @@
+import threading
 import torch
 import whisper
 import sounddevice as sd
@@ -7,71 +8,72 @@ import tempfile
 import os
 import queue
 import time
+import csv
 
-from silero_vad import load_silero_vad
-from silero_vad import get_speech_timestamps
-
-vad_model = load_silero_vad()
 whisper_model = whisper.load_model("base")
 
 SAMPLE_RATE = 16000
-CHUNK_DURATION = 0.5  
-SILENCE_LIMIT = 5     
 
 audio_queue = queue.Queue()
-
 full_audio = []
+recording = True
+
+csv_file = "latency_results.csv"
+
+if not os.path.exists(csv_file):
+    with open(csv_file, mode="w", newline="") as file:
+        writer = csv.writer(file)
+
+        writer.writerow([
+            "Recording Duration",
+            "Whisper Processing Time",
+            "Total Pipeline Time"
+        ])
 
 def audio_callback(indata, frames, time_info, status):
-    audio_queue.put(indata.copy())
+    global recording
+
+    if recording:
+        audio_queue.put(indata.copy())
+
+def stop_recording():
+    global recording
+
+    input("Press Enter to stop recording...\n")
+
+    recording = False
 
 print("Speak now...")
+print("Recording started")
 
-silence_start = None
-speech_detected = False
+total_start = time.time()
+recording_start = time.time()
+
+threading.Thread(target=stop_recording, daemon=True).start()
 
 with sd.InputStream(
     samplerate=SAMPLE_RATE,
     channels=1,
     dtype='float32',
-    blocksize=int(SAMPLE_RATE * CHUNK_DURATION),
     callback=audio_callback
 ):
 
     while True:
 
-        chunk = audio_queue.get()
-        chunk = chunk.flatten()
+        if not recording and audio_queue.empty():
+            break
 
-        full_audio.extend(chunk)
-        audio_tensor = torch.from_numpy(chunk)
+        try:
+            chunk = audio_queue.get(timeout=0.1)
 
-        speech_timestamps = get_speech_timestamps(
-            audio_tensor,
-            vad_model,
-            sampling_rate=SAMPLE_RATE
-        )
-        if len(speech_timestamps) > 0:
+            chunk = chunk.flatten()
 
-            if not speech_detected:
-                print("Speech detected!")
+            full_audio.extend(chunk)
 
-            speech_detected = True
-            silence_start = None
+        except queue.Empty:
+            continue
 
-        else:
-            if speech_detected:
-
-                if silence_start is None:
-                    silence_start = time.time()
-
-                elapsed_silence = time.time() - silence_start
-
-                print(f"Silent for {elapsed_silence:.1f}s", end="\r")
-
-                if elapsed_silence >= SILENCE_LIMIT:
-                    print("\nStopping recording...")
-                    break
+recording_end = time.time()
 
 full_audio = np.array(full_audio, dtype=np.float32)
 
@@ -79,6 +81,7 @@ temp_wav = tempfile.NamedTemporaryFile(
     suffix=".wav",
     delete=False
 )
+
 temp_wav.close()
 
 wav.write(
@@ -87,9 +90,33 @@ wav.write(
     (full_audio * 32767).astype(np.int16)
 )
 
+whisper_start = time.time()
+
 result = whisper_model.transcribe(temp_wav.name)
+
+whisper_end = time.time()
+
+total_end = time.time()
+
+recording_duration = recording_end - recording_start
+whisper_duration = whisper_end - whisper_start
+total_duration = total_end - total_start
 
 print("\nTranscription:")
 print(result["text"])
+
+print("\n===== LATENCY RESULTS =====")
+print(f"Recording Duration: {recording_duration:.2f} sec")
+print(f"Whisper Processing Time: {whisper_duration:.2f} sec")
+print(f"Total Pipeline Time: {total_duration:.2f} sec")
+
+with open(csv_file, mode="a", newline="") as file:
+    writer = csv.writer(file)
+
+    writer.writerow([
+        round(recording_duration, 2),
+        round(whisper_duration, 2),
+        round(total_duration, 2)
+    ])
 
 os.remove(temp_wav.name)
