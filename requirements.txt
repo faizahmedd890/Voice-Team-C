@@ -7,6 +7,9 @@ soundfile
 numpy
 pandas
 jiwer
-coqui-tts
+coqui-tts[codec]
+transformers>=4.40,<5.0
 faster-whisper
 pyaudio
+gTTS
+imageio-ffmpeg
