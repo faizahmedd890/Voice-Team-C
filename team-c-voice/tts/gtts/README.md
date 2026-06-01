@@ -16,24 +16,36 @@ I am new to TTS, so this folder is my practical exploration of `gTTS` in a simpl
 - `sample_prompts.py`: fixed sentence list for fair testing.
 - `human_eval_template.csv`: listening test sheet.
 
-## How I run it
+## How I run
 
-1. Install dependencies:
-   - `pip install -r requirements.txt`
-2. Check if ffmpeg is already installed:
-   - `where.exe ffmpeg`
-3. If ffmpeg is missing (I hit this once), install it:
-   - `winget install --id Gyan.FFmpeg --exact`
-4. Restart terminal and verify:
-   - `ffmpeg -version`
-5. If PATH still does not detect ffmpeg, install Python fallback:
-   - `pip install imageio-ffmpeg`
-2. Quick demo:
-   - `python team-c-voice/tts/gtts/run_gtts_demo.py --text "Your registration is completed."`
-3. Evaluation (latency + reliability + optional ASR proxy):
-   - `python team-c-voice/tts/gtts/evaluate_gtts.py --repeats 3`
-4. If ffmpeg is still not configured correctly:
-   - `python team-c-voice/tts/gtts/evaluate_gtts.py --repeats 3 --skip-asr`
+Run from **repo root** (`Voice-Team-C/`).
+
+Setup:
+
+```bash
+pip install -r requirements.txt
+where.exe ffmpeg
+```
+
+If ffmpeg is missing: `winget install --id Gyan.FFmpeg --exact` or `pip install imageio-ffmpeg`
+
+Quick demo:
+
+```bash
+python team-c-voice/tts/gtts/run_gtts_demo.py --text "Your registration is completed."
+```
+
+Evaluation (latency + reliability + optional ASR proxy WER):
+
+```bash
+python team-c-voice/tts/gtts/evaluate_gtts.py --repeats 3 --whisper-model tiny
+```
+
+If ffmpeg is not ready yet:
+
+```bash
+python team-c-voice/tts/gtts/evaluate_gtts.py --repeats 3 --skip-asr
+```
 
 ## What I learned while setting up ffmpeg
 

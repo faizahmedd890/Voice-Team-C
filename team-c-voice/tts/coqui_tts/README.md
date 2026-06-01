@@ -36,12 +36,35 @@ This folder is my offline neural TTS track for Sprint 1 comparison.
 
 ## How I run it
 
-1. Quick demo:
-   - `python team-c-voice/tts/coqui_tts/run_coqui_demo.py --text "Your registration is completed."`
-2. Evaluation:
-   - `python team-c-voice/tts/coqui_tts/evaluate_coqui.py --repeats 1 --whisper-model tiny`
-3. If ffmpeg is not ready yet:
-   - `python team-c-voice/tts/coqui_tts/evaluate_coqui.py --repeats 1 --skip-asr`
+Run from **repo root** (`Voice-Team-C/`).
+
+Setup:
+
+```bash
+pip install -r requirements.txt
+pip install "coqui-tts[codec]"
+pip install "transformers>=4.40,<5.0"
+```
+
+ffmpeg for eval ASR (same as gTTS): system ffmpeg or `pip install imageio-ffmpeg`
+
+Quick demo:
+
+```bash
+python team-c-voice/tts/coqui_tts/run_coqui_demo.py --text "Your registration is completed."
+```
+
+Evaluation:
+
+```bash
+python team-c-voice/tts/coqui_tts/evaluate_coqui.py --repeats 1 --whisper-model tiny
+```
+
+If ffmpeg is not ready yet:
+
+```bash
+python team-c-voice/tts/coqui_tts/evaluate_coqui.py --repeats 1 --skip-asr
+```
 
 ## First-run behavior (normal)
 

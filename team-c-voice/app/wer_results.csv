@@ -1,0 +1,16 @@
+Ground Truth,Prediction,WER
+I want to apply for land registration,,1.0
+I want to apply for land registration,,1.0
+I need a business license, There,1.0
+I want to apply for land registration,,1.0
+I need a business license,,1.0
+Where is the tax office,,1.0
+How can I renew my permit,,1.0
+I want to apply for land registration,,1.0
+I need a business license,,1.0
+I want to apply for land registration,,1.0
+I need a business license, Inter business license.,0.6
+Where is the tax office, There is a text office.,0.6
+I want to apply for land registration, I want to apply for land registration.,0.0
+I need a business license, need a business license.,0.2
+Where is the tax office, Where is the tax office?,0.0

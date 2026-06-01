@@ -13,3 +13,5 @@ faster-whisper
 pyaudio
 gTTS
 imageio-ffmpeg
+groq
+python-dotenv

@@ -22,6 +22,31 @@ Source reports I used:
 - gTTS: `gtts/outputs/gtts_eval_reports/gtts_eval_results_20260528_224557.csv`
 - Coqui: `coqui_tts/outputs/coqui_eval_reports/coqui_eval_results_20260528_225803.csv`
 
+## How to reproduce (run from repo root)
+
+Setup: `pip install -r requirements.txt`
+
+gTTS eval (same style as my comparison run):
+
+```bash
+python team-c-voice/tts/gtts/evaluate_gtts.py --repeats 1 --whisper-model tiny
+```
+
+Coqui eval:
+
+```bash
+python team-c-voice/tts/coqui_tts/evaluate_coqui.py --repeats 1 --whisper-model tiny
+```
+
+Quick demos:
+
+```bash
+python team-c-voice/tts/gtts/run_gtts_demo.py --text "Your registration is completed."
+python team-c-voice/tts/coqui_tts/run_coqui_demo.py --text "Your registration is completed."
+```
+
+Full command lists: `README.md` (this folder), `gtts/README.md`, `coqui_tts/README.md`.
+
 ## What I learned practically
 
 | Area | gTTS | Coqui TTS |
@@ -38,11 +63,16 @@ Source reports I used:
 - **gTTS** is strong for fast MVP delivery and simple team onboarding.
 - **Coqui** is strong when offline operation matters, but setup and runtime cost are higher.
 - Automated proxy WER helped me check intelligibility, but it is not enough alone for final voice-quality judgment.
-- I still need human listening scores using `human_eval_template.csv` in both folders before making a final recommendation.
+- For a final production pick, the team may also want listener scores (`human_eval_template.csv` in both folders) — see **Points to discuss** in `CHALLENGES.md`.
 
 ## My tentative MVP direction
 
-For Sprint 1 MVP, I would lean toward **gTTS** because of lower latency and easier setup.  
-I would keep **Coqui** as the offline backup path if internet reliability becomes a blocker in deployment.
+For Sprint 1 MVP, I lean toward **gTTS** because of lower latency and easier setup.  
+Coqui stays a possible offline backup if internet reliability becomes a blocker in deployment.
+
+## Points to discuss with team
+
+- Language and voice requirements for Bhutan-specific use cases (my runs were English-only).
+- How much to weight human listening vs automated metrics when locking the TTS engine.
 
 This comparison is based on my own exploration notes and run outputs, not a production benchmark.
