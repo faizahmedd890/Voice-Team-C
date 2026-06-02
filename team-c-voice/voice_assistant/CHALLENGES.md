@@ -1,6 +1,6 @@
-# My Voice Assistant Challenges Log
+# My Voice Assistant Challenges Log (Sprint 1)
 
-This file tracks the main technical challenges I hit while building the spoken assistant (`voice_assistant/`).
+This file tracks the main technical challenges I hit while building the spoken assistant (`voice_assistant/`) in Sprint 1.
 
 Stack for reference: Whisper `small` (ASR) → Groq **`llama-3.1-8b-instant`** (LLM) → gTTS (TTS).
 

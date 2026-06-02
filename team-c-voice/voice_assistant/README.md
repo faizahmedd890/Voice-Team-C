@@ -1,8 +1,11 @@
-# Voice Assistant (Sprint 2)
+# Voice Assistant (Sprint 1)
 
-Spoken assistant: mic/text → Whisper → Groq **`llama-3.1-8b-instant`** → gTTS, plus noisy ASR WER baseline.
+Spoken assistant + ASR baseline — same Sprint 1 deliverable as `team-c-voice/tts/` (TTS comparison), in a separate folder for organization.
 
-Main learning log: **`PROJECT_JOURNEY.md`**  
+Mic/text → Whisper → Groq **`llama-3.1-8b-instant`** → gTTS, plus noisy ASR WER baseline.
+
+Main learning log: **`PROJECT_JOURNEY.md`**
+
 Blockers: **`CHALLENGES.md`**
 
 Run commands below from the **repo root** (`Voice-Team-C/`).

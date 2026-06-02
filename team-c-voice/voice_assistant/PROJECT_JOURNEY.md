@@ -1,6 +1,7 @@
-# My Voice Assistant Project Journey
+# My Voice Assistant Project Journey (Sprint 1)
 
-This folder is my next step after Sprint 1 TTS research (`team-c-voice/tts/`).
+This folder is part of **Sprint 1** — the spoken assistant and ASR baseline work.  
+TTS engine comparison lives in `team-c-voice/tts/` (same sprint, different folder).
 
 ## One task, three requirements (team lead)
 
@@ -67,11 +68,12 @@ I keep this file as my learning log. Other docs:
 
 ## Why I created a separate folder
 
-Sprint 1 `tts/` was engine comparison work (gTTS vs Coqui).  
-This folder is product-style pipeline work, so I kept it separate on purpose.
+All of this is Sprint 1. I split it into folders for clarity:
 
-Sprint 1 challenges: `team-c-voice/tts/CHALLENGES.md`  
-This sprint: `CHALLENGES.md` (same folder as this file).
+- `team-c-voice/tts/` — gTTS vs Coqui comparison  
+- `team-c-voice/voice_assistant/` — spoken assistant + noisy WER baseline  
+
+Challenge logs: `team-c-voice/tts/CHALLENGES.md` and `CHALLENGES.md` (this folder).
 
 ---
 
@@ -81,7 +83,7 @@ This sprint: `CHALLENGES.md` (same folder as this file).
 team-c-voice/voice_assistant/
 ├── PROJECT_JOURNEY.md          # main learning log (this file)
 ├── README.md                   # quick index + run commands
-├── CHALLENGES.md               # blockers and fixes for this sprint
+├── CHALLENGES.md               # blockers and fixes (Sprint 1, voice assistant)
 ├── data/
 │   └── load_utterances.py      # loads test sentences from for_reference CSV
 ├── asr_baseline/               # requirement 3: noisy WER baseline

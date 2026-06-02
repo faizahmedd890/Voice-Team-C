@@ -1,8 +1,11 @@
-# TTS Exploration (Sprint 1)
+# TTS + Voice Assistant (Sprint 1)
 
-gTTS vs Coqui TTS comparison for English government-style sentences.
+Sprint 1 work in two folders:
 
-- Comparison summary: **`TTS_COMPARISON.md`**
+- **TTS comparison** — gTTS vs Coqui (`gtts/`, `coqui_tts/`)
+- **Voice assistant + ASR baseline** — `../voice_assistant/` (same sprint)
+
+Comparison summary: **`TTS_COMPARISON.md`**
 - Blockers: **`CHALLENGES.md`**
 - gTTS track: **`gtts/README.md`**
 - Coqui track: **`coqui_tts/README.md`**
